@@ -1,0 +1,12 @@
+﻿@model IEnumerable<AlphaZero.Models.reminds>
+
+@foreach (var item in Model)
+{
+    <li>
+        <a href="#">
+            <img src="~/Content/assets/vendors/images/img.jpg" alt="">
+            <h3>@Html.DisplayFor(modelItem => item.reminder_title)</h3>
+            <p>@Html.DisplayFor(modelItem => item.reminder_desc)</p>
+        </a>
+    </li>
+}
