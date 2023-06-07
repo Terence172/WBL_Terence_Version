@@ -1,15 +1,10 @@
 ﻿@model IEnumerable<AlphaZero.Models.reminds>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Notifications";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New Customized Reminder", "Create")
-</p>
 
 @*
     <table class="table">
@@ -73,6 +68,32 @@
 *@
 
 
+<div class="page-header">
+    <div class="row">
+
+        <div class="col-md-6 col-sm-12">
+            <div class="title">
+                <h4>Reminders - View</h4>
+            </div>
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Reminders</li>
+                </ol>
+            </nav>
+        </div>
+
+        <div class="col-md-6 col-sm-12 text-right">
+            <div class="dropdown">
+                <a class="btn btn-primary" href="@Url.Action("Create", "Notification")" role="button">
+                    Create Customized Reminder
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div class="card-box mb-30">
     <div class="pd-20">
         <h4 class="text-blue h4">System Reminders</h4>
@@ -119,14 +140,17 @@
                                             <i class="dw dw-eye"></i> View
                                         </a>
 
-                                        @if (item.tenant != null) 
-                                        { 
+                                        @if (item.tenant != null)
+                                        {
                                             <a class="dropdown-item" href="@Url.Action("SendWhatsAppMessage", "WhatsApp", new { id = item.reminder_id })">
                                                 <i class="fa fa-whatsapp"></i> WhatsApp Message
                                             </a>
                                         }
 
-                                        <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
+                                        <a class="dropdown-item" href="@Url.Action("Edit", "Notification", new { id = item.reminder_id })">
+                                            <i class="dw dw-edit2"></i> Edit
+                                        </a>
+
                                         <a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a>
                                     </div>
                                 </div>
@@ -175,7 +199,9 @@
                                         <a class="dropdown-item" href="@Url.Action("Details", "Notification", new { id = item.reminder_id })">
                                             <i class="dw dw-eye"></i> View
                                         </a>
-                                        <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
+                                        <a class="dropdown-item" href="@Url.Action("Edit", "Notification", new { id = item.reminder_id })">
+                                            <i class="dw dw-edit2"></i> Edit
+                                        </a>
                                         <a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a>
                                     </div>
                                 </div>

@@ -125,7 +125,7 @@ else
             <div class="card-body">
                 <h5 class="card-title">Actions :</h5>
                 <p class="card-text">Choose Carefully :P</p>
-                @Html.ActionLink("Go somewhere", "Edit", "Edit", new { id = Model.reminder_id }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Edit this Reminder", "Edit", "Notification", new { id = Model.reminder_id }, new { @class = "btn btn-warning" })
                 @Html.ActionLink("Back to List", "Index", new { id = Model.reminder_id }, new { @class = "btn btn-primary" })
             </div>
         </div>

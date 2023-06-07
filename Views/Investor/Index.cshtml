@@ -1,52 +1,89 @@
 ﻿@model IEnumerable<AlphaZero.Models.user>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Investors";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<div class="page-header">
+    <div class="row">
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.user_password)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.user_name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.user_email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.user_type)
-        </th>
-        <th></th>
-    </tr>
+        <div class="col-md-6 col-sm-12">
+            <div class="title">
+                <h4>Investors - View</h4>
+            </div>
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Home</a></li>
+                    <li class="breadcrumb-item">Manage Users</li>
+                    <li class="breadcrumb-item active" aria-current="page">Investors</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.user_password)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.user_name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.user_email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.user_type)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.user_id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.user_id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.user_id })
-        </td>
-    </tr>
-}
 
-</table>
+<div class="pd-20 card-box mb-30">
+    <div class="clearfix mb-20">
+        <div class="pull-left">
+            <h4 class="text-blue h4">Investors</h4>
+            <p>Investors registered to the <code>.system</code> :P</p>
+        </div>
+        <div class="pull-right">
+            <a href="@Url.Action("Create", "Investor")" class="btn btn-primary btn-sm scroll-click" role="button">
+                <i class="fa fa-code"></i> Create Investor
+            </a>
+        </div>
+    </div>
+    <div class="pb-20">
+        <table class="table hover multiple-select-row data-table-export nowrap">
+            <thead>
+                <tr>
+                    <th class="table-plus datatable-nosort">Investor Username</th>
+                    <th>Name</th>
+                    <th>Lot Number</th>
+                    <th>Hold Value</th>
+                    <th class="datatable-nosort">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    if (item.Investors.Any())
+                    {
+
+                        <tr>
+                            <td class="table-plus">
+                                <span>@Html.DisplayFor(modelItem => item.user_name)</span>
+                            </td>
+
+                            <td>@Html.DisplayFor(modelItem => item.Investors.First().investor_name)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Investors.First().investor_lotNo)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Investors.First().investor_holdvalue)</td>
+                            <td>
+                                <div class="dropdown">
+                                    <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                        <i class="dw dw-more"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                        <a class="dropdown-item" href="@Url.Action("Details", "Investor", new { id = item.user_id })">
+                                            <i class="dw dw-eye"></i> View
+                                        </a>
+                                        <a class="dropdown-item" href="@Url.Action("Edit", "Investor", new { id = item.user_id })">
+                                            <i class="dw dw-edit2"></i> Edit
+                                        </a>
+                                        <a class="dropdown-item" href="@Url.Action("Delete", "Investor", new { id = item.user_id })">
+                                            <i class="dw dw-delete-3"></i> Delete
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
