@@ -945,6 +945,8 @@
     <Content Include="Views\Investor\Edit.cshtml" />
     <Content Include="Views\Investor\Index.cshtml" />
     <Content Include="Views\Notification\Edit.cshtml" />
+    <Content Include="Views\Notification\Create.cshtml" />
+    <Content Include="Views\Notification\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

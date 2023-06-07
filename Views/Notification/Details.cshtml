@@ -1,20 +1,47 @@
 ﻿@model AlphaZero.Models.reminds
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Details Notification";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@if (Model.landlord == null && Model.tenant == null)
-{
-    <h2>Details - Custom Reminder</h2>
-}
-else
-{
-    <h2>Details - @Html.DisplayFor(model => model.CombinedNames)</h2>
-}
+<div class="page-header">
+    <div class="row">
 
-<br /><br />
+        <div class="col-md-6 col-sm-12">
+            <div class="title">
+                <h4>Reminders - View</h4>
+            </div>
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Home</a></li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Notification")">Notification List</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        View Reminder -
+                        @if (Model.landlord == null && Model.tenant == null)
+                        {
+                            <span>Customized</span>
+                        }
+                        else
+                        {
+                            <span>@Html.DisplayFor(model => model.CombinedNames)</span>
+                        }
+                    </li>
+                </ol>
+            </nav>
+        </div>
+
+        <div class="col-md-6 col-sm-12 text-right">
+            <div class="dropdown">
+                <a class="btn btn-primary" href="@Url.Action("Create", "Notification")" role="button">
+                    Create Customized Reminder
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
     <!-- basic table  Start -->
 <div class="pd-20 card-box mb-30">
@@ -53,7 +80,7 @@ else
             <div class="card-body">
                 <h5 class="card-title">Actions :</h5>
                 <p class="card-text">Choose Carefully :P</p>
-                @Html.ActionLink("Go somewhere", "Edit", "Edit", new { id = Model.reminder_id }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Edit this Reminder", "Edit", "Notification", new { id = Model.reminder_id }, new { @class = "btn btn-warning" })
                 @Html.ActionLink("Back to List", "Index", new { id = Model.reminder_id }, new { @class = "btn btn-primary" })
             </div>
         </div>

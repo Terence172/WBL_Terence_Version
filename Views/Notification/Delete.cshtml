@@ -1,24 +1,23 @@
 ﻿@model AlphaZero.Models.reminds
 
 @{
-    ViewBag.Title = "Edit Notification";
+    ViewBag.Title = "Delete Notification";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 
 <div class="page-header">
     <div class="row">
 
         <div class="col-md-6 col-sm-12">
             <div class="title">
-                <h4>Reminders - Edit</h4>
+                <h4>Reminders - Delete</h4>
             </div>
             <nav aria-label="breadcrumb" role="navigation">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Home</a></li>
                     <li class="breadcrumb-item"><a href="@Url.Action("Index", "Notification")">Notification List</a></li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        Edit Reminder - 
+                        Delete Reminder -
                         @if (Model.landlord == null && Model.tenant == null)
                         {
                             <span>Customized</span>
@@ -71,21 +70,21 @@
                     <tr>
                         <th scope="row">Reminder Title</th>
                         <td>
-                            @Html.EditorFor(model => model.reminder_title, new { htmlAttributes = new { @class = "form-control", @placeholder = "Title Goes Here" } })
+                            @Html.EditorFor(model => model.reminder_title, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                             @Html.ValidationMessageFor(model => model.reminder_title, "", new { @class = "text-danger" })
                         </td>
                     </tr>
                     <tr>
                         <th scope="row">Reminder Description</th>
                         <td>
-                            @Html.EditorFor(model => model.reminder_desc, new { htmlAttributes = new { @class = "form-control", @placeholder = "Description Goes Here" } })
+                            @Html.EditorFor(model => model.reminder_desc, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                             @Html.ValidationMessageFor(model => model.reminder_desc, "", new { @class = "text-danger" })
                         </td>
                     </tr>
                     <tr>
                         <th scope="row">Reminder Date</th>
                         <td>
-                            @Html.EditorFor(model => model.reminder_date, new { htmlAttributes = new { @class = "form-control date-picker", @placeholder = "Select Date", @type = "text" } })
+                            @Html.EditorFor(model => model.reminder_date, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                             @Html.ValidationMessageFor(model => model.reminder_date, "", new { @class = "text-danger" })
                         </td>
                     </tr>
@@ -96,7 +95,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Actions :</h5>
                     <p class="card-text">Choose Carefully :P</p>
-                    <input type="submit" value="Submit" class="btn btn-primary" />
+                    <input type="submit" value="Delete" class="btn btn-danger" />
                     @Html.ActionLink("Back to List", "Index", new { id = Model.reminder_id }, new { @class = "btn btn-secondary" })
                 </div>
             </div>
@@ -135,21 +134,21 @@
                     <tr>
                         <th scope="row">Reminder Title</th>
                         <td>
-                            @Html.EditorFor(model => model.reminder_title, new { htmlAttributes = new { @class = "form-control", @placeholder = "Title Goes Here" } })
+                            @Html.EditorFor(model => model.reminder_title, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                             @Html.ValidationMessageFor(model => model.reminder_title, "", new { @class = "text-danger" })
                         </td>
                     </tr>
                     <tr>
                         <th scope="row">Reminder Description</th>
                         <td>
-                            @Html.EditorFor(model => model.reminder_desc, new { htmlAttributes = new { @class = "form-control", @placeholder = "Description Goes Here" } })
+                            @Html.EditorFor(model => model.reminder_desc, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                             @Html.ValidationMessageFor(model => model.reminder_desc, "", new { @class = "text-danger" })
                         </td>
                     </tr>
                     <tr>
                         <th scope="row">Reminder Date</th>
                         <td>
-                            @Html.EditorFor(model => model.reminder_date, new { htmlAttributes = new { @class = "form-control date-picker", @placeholder = "Select Date", @type = "text" } })
+                            @Html.EditorFor(model => model.reminder_date, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                             @Html.ValidationMessageFor(model => model.reminder_date, "", new { @class = "text-danger" })
                         </td>
                     </tr>
@@ -160,7 +159,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Actions :</h5>
                     <p class="card-text">Choose Carefully :P</p>
-                    <input type="submit" value="Submit" class="btn btn-primary" />
+                    <input type="submit" value="Delete" class="btn btn-danger" />
                     @Html.ActionLink("Back to List", "Index", new { id = Model.reminder_id }, new { @class = "btn btn-secondary" })
                 </div>
             </div>
