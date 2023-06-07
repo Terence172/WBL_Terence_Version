@@ -34,7 +34,7 @@ namespace AlphaZero
 
             // Let's also create a sample background job
             //BackgroundJob.Enqueue(() => Debug.WriteLine("Hello world from Hangfire!"));
-            RecurringJob.AddOrUpdate("Run every day", () => CreateReminder(), Cron.Minutely);
+            RecurringJob.AddOrUpdate("Run every day", () => CreateReminder(), Cron.Daily);
             //"* * * * *" for minutely [strictly testing]
             //Cron.Daily for daily
             // ...other configuration logic
