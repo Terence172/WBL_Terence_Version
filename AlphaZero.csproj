@@ -201,6 +201,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\HangfireController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InvestorController.cs" />
@@ -283,6 +284,7 @@
     <Content Include="Content\assets\src\fonts\ionicons-master\fonts\ionicons.svg" />
     <Content Include="Content\assets\src\fonts\themify-icons\fonts\themify.svg" />
     <Content Include="Content\assets\src\fonts\themify-icons\themify-icons.css" />
+    <Content Include="Content\assets\src\images\AkmalRentals-Logo.png" />
     <Content Include="Content\assets\src\images\apple-touch-icon.png" />
     <Content Include="Content\assets\src\images\banner-img.png" />
     <Content Include="Content\assets\src\images\briefcase.svg" />
@@ -325,6 +327,7 @@
     <Content Include="Content\assets\src\images\modal-img2.jpg" />
     <Content Include="Content\assets\src\images\modal-img3.jpg" />
     <Content Include="Content\assets\src\images\new-loader.gif" />
+    <Content Include="Content\assets\src\images\NotBlackYellow.png" />
     <Content Include="Content\assets\src\images\opera.png" />
     <Content Include="Content\assets\src\images\page-icon.svg" />
     <Content Include="Content\assets\src\images\person.svg" />
@@ -950,6 +953,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Email\" />
     <Folder Include="Views\Hangfire\" />
   </ItemGroup>
   <ItemGroup>

@@ -67,6 +67,11 @@ namespace AlphaZero.Controllers
                 db.Investors.Add(investor);
                 db.SaveChanges();
 
+                // Call the SendCredentials method of EmailController to send the credentials
+                EmailController emailController = new EmailController();
+                emailController.SendCredentials(user.user_name, user.user_password, user.user_email, investor.investor_name);
+
+
                 return RedirectToAction("Index");
             }
 
