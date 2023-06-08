@@ -236,7 +236,7 @@
                 <ul id="accordion-menu">
                     <li class="dropdown">
                         <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon dw dw-house-1"></span><span class="mtext">Manage Users</span>
+                            <span class="micon icon-copy fa fa-user-o"></span><span class="mtext">Manage Users</span>
                         </a>
                         <ul class="submenu">
                             <li><a href="index.html">Dashboard style 1</a></li>
@@ -245,16 +245,10 @@
                     </li>
                     <li class="dropdown">
                         <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon dw dw-edit2"></span><span class="mtext">Forms</span>
+                            <span class="micon icon-copy ion-ios-home"></span><span class="mtext">Manage Buildings</span>
                         </a>
                         <ul class="submenu">
-                            <li><a href="form-basic.html">Form Basic</a></li>
-                            <li><a href="advanced-components.html">Advanced Components</a></li>
-                            <li><a href="form-wizard.html">Form Wizard</a></li>
-                            <li><a href="html5-editor.html">HTML5 Editor</a></li>
-                            <li><a href="form-pickers.html">Form Pickers</a></li>
-                            <li><a href="image-cropper.html">Image Cropper</a></li>
-                            <li><a href="image-dropzone.html">Image Dropzone</a></li>
+                            <li>@Html.ActionLink("Manage Floors", "Index", "floorsCropper")</li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -445,6 +439,8 @@
     <script src="~/Content/assets/src/plugins/jvectormap/jquery-jvectormap-2.0.3.min.js"></script>
     <script src="~/Content/assets/src/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
     <script src="~/Content/assets/vendors/scripts/dashboard2.js"></script>
+
+  
 
     @RenderSection("scripts", required: false)
 

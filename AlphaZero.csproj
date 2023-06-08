@@ -202,6 +202,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
+    <Compile Include="Controllers\floorsCropperController.cs" />
     <Compile Include="Controllers\HangfireController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InvestorController.cs" />
@@ -284,7 +285,6 @@
     <Content Include="Content\assets\src\fonts\ionicons-master\fonts\ionicons.svg" />
     <Content Include="Content\assets\src\fonts\themify-icons\fonts\themify.svg" />
     <Content Include="Content\assets\src\fonts\themify-icons\themify-icons.css" />
-    <Content Include="Content\assets\src\images\AkmalRentals-Logo.png" />
     <Content Include="Content\assets\src\images\apple-touch-icon.png" />
     <Content Include="Content\assets\src\images\banner-img.png" />
     <Content Include="Content\assets\src\images\briefcase.svg" />
@@ -300,6 +300,7 @@
     <Content Include="Content\assets\src\images\demo.svg" />
     <Content Include="Content\assets\src\images\deskapp-logo-white.svg" />
     <Content Include="Content\assets\src\images\deskapp-logo.svg" />
+    <Content Include="Content\assets\src\images\DL1 layout.jpg" />
     <Content Include="Content\assets\src\images\edge.png" />
     <Content Include="Content\assets\src\images\favicon-16x16.png" />
     <Content Include="Content\assets\src\images\favicon-32x32.png" />
@@ -316,6 +317,7 @@
     <Content Include="Content\assets\src\images\img4.jpg" />
     <Content Include="Content\assets\src\images\img5.jpg" />
     <Content Include="Content\assets\src\images\internet-explorer.png" />
+    <Content Include="Content\assets\src\images\blueprint.png" />
     <Content Include="Content\assets\src\images\layout\header-dark.png" />
     <Content Include="Content\assets\src\images\layout\header-white.png" />
     <Content Include="Content\assets\src\images\layout\sidebar-dark.png" />
@@ -327,7 +329,6 @@
     <Content Include="Content\assets\src\images\modal-img2.jpg" />
     <Content Include="Content\assets\src\images\modal-img3.jpg" />
     <Content Include="Content\assets\src\images\new-loader.gif" />
-    <Content Include="Content\assets\src\images\NotBlackYellow.png" />
     <Content Include="Content\assets\src\images\opera.png" />
     <Content Include="Content\assets\src\images\page-icon.svg" />
     <Content Include="Content\assets\src\images\person.svg" />
@@ -950,6 +951,11 @@
     <Content Include="Views\Notification\Edit.cshtml" />
     <Content Include="Views\Notification\Create.cshtml" />
     <Content Include="Views\Notification\Delete.cshtml" />
+    <Content Include="Views\floorsCropper\Create.cshtml" />
+    <Content Include="Views\floorsCropper\Delete.cshtml" />
+    <Content Include="Views\floorsCropper\Details.cshtml" />
+    <Content Include="Views\floorsCropper\Edit.cshtml" />
+    <Content Include="Views\floorsCropper\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
