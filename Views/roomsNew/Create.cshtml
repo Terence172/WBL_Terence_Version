@@ -5,56 +5,319 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Create</h2>
+<head>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <style>
+        .container {
+        }
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>room</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.room_id, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.room_id, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.room_id, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        .resize-drag {
+            position: absolute;
+            background-color: rgba(255, 2, 2, 0.8);
+            border: 2px solid #0B132B;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            color: #0B132B;
+            text-align: left;
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.floor_id, "floor_id", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("floor_id", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.floor_id, "", new { @class = "text-danger" })
+<div class="page-header">
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <div class="title">
+                <h4>Room - Create - @ViewBag.FloorID</h4>
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.room_price, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.room_price, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.room_price, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.room_status, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.room_status, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.room_status, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Home</a></li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "roomsNew")">Rooms List</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Creating Room in  @ViewBag.FloorID</li>
+                </ol>
+            </nav>
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
+
+
+<div class="row">
+    <div class="col-xl-6 mb-30">
+        <div class="card-box pd-20" id="container" style="height: 800px; background-image: url('@Url.Content(TempData["NewLayout"]?.ToString() ?? "~/Content/assets/src/images/DL1 layout.jpg")'); background-size: contain; background-position: center; background-repeat: no-repeat;">
+
+            <div class="container">
+                <div id="resizable" class="resize-drag">
+                    <!-- Content of the resizable div <p class="action-link" data-url="@Url.Action("Index", "Notification")">I am Draggable and Resizable</p> -->
+                    <p class="text-dark">I am a Room</p>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+    <div class="col-xl-6 mb-30">
+        <div class="card-box height-100-p pd-20">
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="clearfix mb-20">
+                    <div class="pull-left">
+                        <h4 class="text-blue h4">Create Room Form</h4>
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.floor_id, new { @Value = ViewBag.FloorID })
+                        @Html.HiddenFor(model => model.room_coordinate, new { id = "roomCoordinate" })
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-2 col-form-label">Room Name</label>
+                    <div class="col-sm-12 col-md-10">
+                        @Html.EditorFor(model => model.room_name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Room Name Goes Here" } })
+                        @Html.ValidationMessageFor(model => model.room_name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-2 col-form-label">Room Price</label>
+                    <div class="col-sm-12 col-md-10">
+                        @Html.EditorFor(model => model.room_price, new { htmlAttributes = new { @class = "form-control", @placeholder = "Price in RM Goes Here", @type = "number", step = "0.01" } })
+                        @Html.ValidationMessageFor(model => model.room_price, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-2 col-form-label">Room Status</label>
+                    <div class="col-sm-12 col-md-10">
+                        @Html.DropDownList("room_status", new SelectList(
+                            new[]
+                            {
+                                new { Value = "Available", Text = "Available" },
+                                new { Value = "Booked", Text = "Booked" },
+                                new { Value = "Maintenance", Text = "Maintenance" }
+                            },
+                            "Value",
+                            "Text",
+                            Model?.room_status),
+                            new { @class = "form-control selectpicker" })
+
+                    </div>
+                </div>
+
+
+                <div class="card card-box text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Actions :</h5>
+                        <p class="card-text">Choose Carefully :P</p>
+
+                        <a class="btn btn-info" data-toggle="modal" data-target="#confirmation-modal" role="button">
+                            Submit
+                        </a>
+
+                        <a class="btn btn-outline-warning" href="@Url.Action("Index", "roomsNew")" role="button">
+                            Cancel
+                        </a>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="confirmation-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body text-center font-18">
+                                <h4 class="padding-top-30 mb-30 weight-500">Are you sure you want to create this Room?</h4>
+                                <h5 class="mb-30 weight-500">Check the position of the Room</h5>
+                                <div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto;">
+                                    <div class="col-6">
+                                        <button type="button" class="btn btn-secondary border-radius-100 btn-block confirmation-btn" data-dismiss="modal"><i class="fa fa-times"></i></button>
+                                        NO
+                                    </div>
+                                    <div class="col-6">
+                                        <button type="submit" class="btn btn-primary border-radius-100 btn-block confirmation-btn" id="copyContainerInfoBtn" onclick="copyContainerInfo()">
+                                            <i class="fa fa-check"></i>
+                                        </button>
+                                        YES
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    var jq = jQuery.noConflict();
+
+    jq(document).ready(function () {
+        jq("#resizable").resizable();
+    });
+
+    // Make the resizable div draggable
+    dragElement(document.getElementById("resizable"));
+
+    function dragElement(element) {
+        let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+        element.onmousedown = dragMouseDown;
+
+        function dragMouseDown(e) {
+            e = e || window.event;
+            e.preventDefault();
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            document.onmouseup = closeDragElement;
+            document.onmousemove = elementDrag;
+        }
+
+        function elementDrag(e) {
+            e = e || window.event;
+            e.preventDefault();
+            pos1 = pos3 - e.clientX;
+            pos2 = pos4 - e.clientY;
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            element.style.top = (element.offsetTop - pos2) + "px";
+            element.style.left = (element.offsetLeft - pos1) + "px";
+        }
+
+        function closeDragElement() {
+            document.onmouseup = null;
+            document.onmousemove = null;
+        }
+    }
+
+
+    function copyContainerInfo() {
+        var container = document.getElementById("container");
+        var resizable = document.getElementById("resizable");
+
+        var containerWidth = container.offsetWidth;
+        var containerHeight = container.offsetHeight;
+
+        var resizableLeft = (resizable.offsetLeft / containerWidth) * 100;
+        var resizableTop = (resizable.offsetTop / containerHeight) * 100;
+        var resizableWidth = (resizable.offsetWidth / containerWidth) * 100;
+        var resizableHeight = (resizable.offsetHeight / containerHeight) * 100;
+
+        var containerInfo = {
+            resizableLeft: resizableLeft,
+            resizableTop: resizableTop,
+            resizableWidth: resizableWidth,
+            resizableHeight: resizableHeight
+        };
+
+        var containerInfoString = JSON.stringify(containerInfo);
+        navigator.clipboard.writeText(containerInfoString);
+
+        // Update the value of the hidden field
+        document.getElementById("roomCoordinate").value = containerInfoString;
+
+        // Submit the form
+        document.getElementById("yourFormId").submit();
+    }
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*
+
+
+
+    <h2>Create</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>room</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.room_id, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.room_id, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.room_id, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.floor_id, "floor_id", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("floor_id", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.floor_id, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.room_price, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.room_price, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.room_price, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.room_status, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.room_status, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.room_status, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+*@

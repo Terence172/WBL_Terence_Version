@@ -5,39 +5,135 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<head>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <style>
+        .room-box {
+        position: absolute;
+        top: @Html.Raw(Model.resizableTop + "%");
+        left: @Html.Raw(Model.resizableLeft + "%");
+        width: @Html.Raw(Model.resizableWidth + "%");
+        height:@Html.Raw(Model.resizableHeight + "%");
+        background-color: rgba(255, 2, 2, 0.8);
+        border: 2px solid #0B132B;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        color: #0B132B;
+        text-align: left;
+        padding: 10px;
+        font-size: 16px;
+           }
+    </style>
+</head>
 
-<div>
-    <h4>room</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.room_price)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.room_price)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.room_status)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.room_status)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.floor.floor_cctvQr)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.floor.floor_cctvQr)
-        </dd>
-
-    </dl>
+<div class="page-header">
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <div class="title">
+                <h4>Room - View - @ViewBag.FloorID - @Model.room_name</h4>
+            </div>
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Home</a></li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "roomsNew")">Rooms List</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Viewing Room in  @ViewBag.FloorID, @Model.room_name</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.room_id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+
+<div class="row">
+    <div class="col-xl-6 mb-30">
+        <div class="card-box pd-20" id="container" style="height: 800px; background-image: url('@Url.Content(TempData["NewLayout"]?.ToString() ?? "~/Content/assets/src/images/DL1 layout.jpg")'); background-size: contain; background-position: center; background-repeat: no-repeat;">
+
+            <div class="room-box">
+                <p class="text-dark">@Model.room_name</p>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-xl-6 mb-30">
+        <div class="card-box height-100-p pd-20">
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="clearfix mb-20">
+                    <div class="pull-left">
+                        <h4 class="text-blue h4">Viewing Room - @Model.room_name</h4>
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.floor_id, new { @Value = ViewBag.FloorID })
+                        @Html.HiddenFor(model => model.room_coordinate, new { id = "roomCoordinate" })
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-2 col-form-label">Floor</label>
+                    <div class="col-sm-12 col-md-10">
+                        @Html.EditorFor(model => model.floor_id, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.floor_id, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-2 col-form-label">Room Name</label>
+                    <div class="col-sm-12 col-md-10">
+                        @Html.EditorFor(model => model.room_name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.room_name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-2 col-form-label">Room Price</label>
+                    <div class="col-sm-12 col-md-10">
+                        @Html.EditorFor(model => model.room_price, new { htmlAttributes = new { @class = "form-control", @type = "number", step = "0.01", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.room_price, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-2 col-form-label">Room Status</label>
+                    <div class="col-sm-12 col-md-10">
+                        @Html.EditorFor(model => model.room_status, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.room_status, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+
+
+                <div class="card card-box text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Actions :</h5>
+                        <p class="card-text">Choose Carefully :P</p>
+
+                        <a class="btn btn-info" href="@Url.Action("Edit", "roomsNew" , new { id = Model.room_id, floorId = ViewBag.FloorID })" role="button">
+                            Edit
+                        </a>
+                        
+                        <a class="btn btn-warning" href="@Url.Action("Index", "roomsNew")" role="button">
+                            Cancel
+                        </a>
+                        
+                        <a class="btn btn-danger" href="@Url.Action("Delete", "roomsNew" , new { id = Model.room_id, floorId = ViewBag.FloorID })" role="button">
+                            Delete
+                        </a>
+
+                    </div>
+                </div>
+
+
+
+            }
+
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

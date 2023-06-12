@@ -1,7 +1,5 @@
 ﻿@model IEnumerable<AlphaZero.Models.room>
 
-@using Newtonsoft.Json
-
 @{
     ViewBag.Title = "Rooms";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -22,10 +20,15 @@
             color: #0B132B;
             text-align: left;
             padding: 10px;
-            font-size: 16px;
+            font-size: 18px;
         }
     </style>
 </head>
+
+@if (TempData["FloorID"] == null)
+{
+    TempData["FloorID"] = "DL1";
+}
 
 <div class="page-header">
     <div class="row">
@@ -36,36 +39,38 @@
             <nav aria-label="breadcrumb" role="navigation">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Rooms in </li>
+                    <li class="breadcrumb-item active" aria-current="page">Rooms in @TempData["FloorID"]</li>
                 </ol>
             </nav>
         </div>
         <div class="col-md-6 col-sm-12 text-right">
             <div class="dropdown">
-                <a class="btn btn-primary dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                    January 2018
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="#">Export List</a>
-                    <a class="dropdown-item" href="#">Policies</a>
-                    <a class="dropdown-item" href="#">View Assets</a>
-                </div>
+
+
+                @Html.DropDownList("floorId", new SelectList(Model.Select(r => r.floor_id).Distinct()), "Active : " + TempData["FloorID"].ToString(), new { @class = "form-control selectpicker", style = "width:10%;" })
+
             </div>
         </div>
     </div>
 </div>
 
+
 <div class="row">
     <div class="col-xl-6 mb-30">
-        <div class="card-box pd-20" id="container" style="height: 800px; background-image: url('@Url.Content("~/Content/assets/src/images/DL1 layout.jpg")'); background-size: contain; background-position: center; background-repeat: no-repeat;">
+        <div class="card-box pd-20" id="container" style="height: 800px; background-image: url('@Url.Content(TempData["NewLayout"]?.ToString() ?? "~/Content/assets/src/images/DL1 layout.jpg")'); background-size: contain; background-position: center; background-repeat: no-repeat;">
 
 
             @foreach (var room in Model)
             {
-                <div class="room-box" style="@Html.Raw("top:" + room.resizableTop + "%;" + "left:" + room.resizableLeft + "%;" + "width:" + room.resizableWidth + "%;" + "height:" + room.resizableHeight + "%;")">
-                    <p class="text-dark">I am a @room.room_name</p>
-                </div>
+                if (TempData["FloorID"].ToString() == room.floor_id)
+                {
+                    <div class="room-box" style="@Html.Raw("top:" + room.resizableTop + "%;" + "left:" + room.resizableLeft + "%;" + "width:" + room.resizableWidth + "%;" + "height:" + room.resizableHeight + "%;")">
+                        <a href="@Url.Action("Details", "roomsNew", new { id = room.room_id, floorId = TempData["FloorID"] })" class="text-dark">@room.room_name</a>
+                    </div>
+                }
             }
+
+
 
 
 
@@ -73,17 +78,39 @@
     </div>
     <div class="col-xl-6 mb-30">
         <div class="card-box height-100-p pd-20">
-            <h2 class="h4 mb-20">Lead Target</h2>
-            @foreach (var room in Model)
-            {
+            <h5 class="h4 text-blue mb-20">Viewing - @TempData["FloorID"].ToString()</h5>
+            <div class="tab">
+                <ul class="nav nav-pills justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link active text-blue" href="@Url.Action("Create", "roomsNew", new { floorId = TempData["FloorID"] })" role="button" aria-selected="true">Create a Room for @TempData["FloorID"].ToString()</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="home6" role="tabpanel">
+                    <div class="pd-20">
 
-                <p>@room.room_name</p>
-                <br />
+                        Total rooms in @TempData["FloorID"].ToString() : @Model.Count(room => room.floor_id == TempData["FloorID"].ToString())
 
-            }
+                        <br /><br />
+
+                        Amount of rooms in @TempData["FloorID"].ToString() that is booked : @Model.Count(room => room.floor_id == TempData["FloorID"].ToString() && room.room_status == "Booked")
+
+                        <br /><br />
+
+                        Amount of rooms in @TempData["FloorID"].ToString() that is available : @Model.Count(room => room.floor_id == TempData["FloorID"].ToString() && room.room_status == "Available")
+
+                        <br /><br />
+
+                        Amount of rooms in @TempData["FloorID"].ToString() that is under maintenance : @Model.Count(room => room.floor_id == TempData["FloorID"].ToString() && room.room_status == "Maintenance")
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -93,6 +120,15 @@
 
     jq(document).ready(function () {
         jq("#resizable").resizable();
+    });
+
+    jq(document).ready(function () {
+        $("#floorId").change(function () {
+            var selectedFloorId = $(this).val();
+            if (selectedFloorId) {
+                window.location.href = "@Url.Action("ChangeRoom", "roomsNew")" + "?floorId=" + selectedFloorId;
+            }
+        });
     });
 
     function copyContainerInfo() {
