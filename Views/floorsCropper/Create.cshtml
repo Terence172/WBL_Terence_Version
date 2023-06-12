@@ -5,64 +5,268 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Create</h2>
+<head>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <style>
+        .container {
+            position: absolute;
+            width: 70%;
+            height: 1000px;
+            background-image: url('@Url.Content("~/Content/assets/src/images/DL1 layout.jpg")');
+            background-size: cover;
+        }
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>floor</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.floor_id, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.floor_id, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.floor_id, "", new { @class = "text-danger" })
+        .resize-drag {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: rgba(255, 2, 2, 0.8);
+            cursor: move;
+            border: 2px solid #0B132B;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            color: #0B132B;
+            text-align: center;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+
+        .overlay {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        .button-container {
+            position: relative;
+            z-index: 1000;
+            pointer-events: auto;
+        }
+    </style>
+</head>
+
+
+<div class="page-header">
+    <div class="row">
+
+        <div class="col-md-6 col-sm-12">
+            <div class="title">
+                <h4>Room - View</h4>
             </div>
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Rooms in </li>
+                </ol>
+            </nav>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.floor_modemIP, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.floor_modemIP, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.floor_modemIP, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.floor_cctvQr, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.floor_cctvQr, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.floor_cctvQr, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.floor_layout, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.floor_layout, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.floor_layout, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.landlord_id, "landlord_id", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("landlord_id", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.landlord_id, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+        <div class="col-md-6 col-sm-12 text-right">
+            <div class="dropdown">
+                <a class="btn btn-primary" href="@Url.Action("Create", "floorsCropper")" role="button">
+                    Create Room
+                </a>
             </div>
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
+
+
+
+<div class="row">
+    <div class="col-xl-6 mb-30">
+        <div class="card-box pd-20" style="height:1050px;">
+
+
+            <div class="container" id="container">
+                <div id="resizable" class="resize-drag">
+                    <!-- Content of the resizable div <p class="action-link" data-url="@Url.Action("Index", "Notification")">I am Draggable and Resizable</p> -->
+                    <p class="text-dark">I am a Room</p>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="col-xl-6 mb-30">
+        <div class="card-box height-100-p pd-20">
+
+
+            <h2 class="h4 mb-20">Lead Target</h2>
+            <div id="chart6"></div>
+
+
+        </div>
+    </div>
+</div>
+
+
+<div class="overlay">
+    <div class="button-container">
+        <button onclick="copyContainerInfo()">Copy Container Info</button>
+        <input type="text" id="pasteInput">
+        <button onclick="pasteContainerInfo()">Paste Container Info</button>
+    </div>
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    var jq = jQuery.noConflict();
+
+    jq(document).ready(function () {
+        jq("#resizable").resizable();
+    });
+
+    // Make the resizable div draggable
+    dragElement(document.getElementById("resizable"));
+
+    function dragElement(element) {
+        let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+        element.onmousedown = dragMouseDown;
+
+        function dragMouseDown(e) {
+            e = e || window.event;
+            e.preventDefault();
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            document.onmouseup = closeDragElement;
+            document.onmousemove = elementDrag;
+        }
+
+        function elementDrag(e) {
+            e = e || window.event;
+            e.preventDefault();
+            pos1 = pos3 - e.clientX;
+            pos2 = pos4 - e.clientY;
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            element.style.top = (element.offsetTop - pos2) + "px";
+            element.style.left = (element.offsetLeft - pos1) + "px";
+        }
+
+        function closeDragElement() {
+            document.onmouseup = null;
+            document.onmousemove = null;
+        }
+    }
+
+    function copyContainerInfo() {
+        var container = document.getElementById("container");
+        var resizable = document.getElementById("resizable");
+        var containerInfo = {
+            top: container.offsetTop,
+            left: container.offsetLeft,
+            width: container.offsetWidth,
+            height: container.offsetHeight,
+            resizableLeft: resizable.offsetLeft,
+            resizableTop: resizable.offsetTop,
+            resizableWidth: resizable.offsetWidth,
+            resizableHeight: resizable.offsetHeight
+        };
+        var containerInfoString = JSON.stringify(containerInfo);
+        navigator.clipboard.writeText(containerInfoString);
+    }
+
+    function pasteContainerInfo() {
+        var pasteInput = document.getElementById("pasteInput");
+        var containerInfoString = pasteInput.value;
+        if (!containerInfoString) return;
+
+        var containerInfo = JSON.parse(containerInfoString);
+        var container = document.getElementById("container");
+        var resizable = document.getElementById("resizable");
+        container.style.top = containerInfo.top + "px";
+        container.style.left = containerInfo.left + "px";
+        container.style.width = containerInfo.width + "px";
+        container.style.height = containerInfo.height + "px";
+        resizable.style.left = containerInfo.resizableLeft + "px";
+        resizable.style.top = containerInfo.resizableTop + "px";
+        resizable.style.width = containerInfo.resizableWidth + "px";
+        resizable.style.height = containerInfo.resizableHeight + "px";
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*
+    <h2>Create</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>floor</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.floor_id, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.floor_id, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.floor_id, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.floor_modemIP, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.floor_modemIP, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.floor_modemIP, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.floor_cctvQr, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.floor_cctvQr, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.floor_cctvQr, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.floor_layout, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.floor_layout, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.floor_layout, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.landlord_id, "landlord_id", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("landlord_id", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.landlord_id, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+*@

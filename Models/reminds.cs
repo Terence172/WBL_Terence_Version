@@ -22,7 +22,6 @@ namespace AlphaZero.Models
         public string reminder_title { get; set; }
         public Nullable<System.DateTime> reminder_date { get; set; }
 
-
         public string FormattedDate
         {
             get
@@ -53,6 +52,7 @@ namespace AlphaZero.Models
                 }
             }
         }
+
 
         public virtual landlord landlord { get; set; }
         public virtual tenant tenant { get; set; }

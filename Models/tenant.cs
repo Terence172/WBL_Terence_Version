@@ -33,7 +33,7 @@ namespace AlphaZero.Models
         public Nullable<System.DateTime> tenant_outTime { get; set; }
         public double tenant_outstanding { get; set; }
         public string tenant_paymentStatus { get; set; }
-        public string room_id { get; set; }
+        public int room_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<reminds> reminds { get; set; }

@@ -12,30 +12,26 @@ namespace AlphaZero.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class room
+    public partial class Job
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public room()
+        public Job()
         {
-            this.tenants = new HashSet<tenant>();
+            this.JobParameters = new HashSet<JobParameter>();
+            this.States = new HashSet<State>();
         }
     
-        public int room_id { get; set; }
-        public string floor_id { get; set; }
-        public double room_price { get; set; }
-        public string room_status { get; set; }
-        public string room_name { get; set; }
-        public string room_coordinate { get; set; }
-
-        // Additional properties for extracted values
-        public float resizableLeft { get; set; }
-        public float resizableTop { get; set; }
-        public float resizableWidth { get; set; }
-        public float resizableHeight { get; set; }
-
-
-        public virtual floor floor { get; set; }
+        public long Id { get; set; }
+        public Nullable<long> StateId { get; set; }
+        public string StateName { get; set; }
+        public string InvocationData { get; set; }
+        public string Arguments { get; set; }
+        public System.DateTime CreatedAt { get; set; }
+        public Nullable<System.DateTime> ExpireAt { get; set; }
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tenant> tenants { get; set; }
+        public virtual ICollection<JobParameter> JobParameters { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<State> States { get; set; }
     }
 }

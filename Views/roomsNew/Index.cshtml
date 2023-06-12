@@ -1,0 +1,191 @@
+﻿@model IEnumerable<AlphaZero.Models.room>
+
+@using Newtonsoft.Json
+
+@{
+    ViewBag.Title = "Rooms";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <style>
+        .container {
+        }
+
+        .room-box {
+            position: absolute;
+            background-color: rgba(255, 2, 2, 0.8);
+            border: 2px solid #0B132B;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            color: #0B132B;
+            text-align: left;
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<div class="page-header">
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <div class="title">
+                <h4>Room - View</h4>
+            </div>
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Rooms in </li>
+                </ol>
+            </nav>
+        </div>
+        <div class="col-md-6 col-sm-12 text-right">
+            <div class="dropdown">
+                <a class="btn btn-primary dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                    January 2018
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="#">Export List</a>
+                    <a class="dropdown-item" href="#">Policies</a>
+                    <a class="dropdown-item" href="#">View Assets</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-6 mb-30">
+        <div class="card-box pd-20" id="container" style="height: 800px; background-image: url('@Url.Content("~/Content/assets/src/images/DL1 layout.jpg")'); background-size: contain; background-position: center; background-repeat: no-repeat;">
+
+
+            @foreach (var room in Model)
+            {
+                <div class="room-box" style="@Html.Raw("top:" + room.resizableTop + "%;" + "left:" + room.resizableLeft + "%;" + "width:" + room.resizableWidth + "%;" + "height:" + room.resizableHeight + "%;")">
+                    <p class="text-dark">I am a @room.room_name</p>
+                </div>
+            }
+
+
+
+        </div>
+    </div>
+    <div class="col-xl-6 mb-30">
+        <div class="card-box height-100-p pd-20">
+            <h2 class="h4 mb-20">Lead Target</h2>
+            @foreach (var room in Model)
+            {
+
+                <p>@room.room_name</p>
+                <br />
+
+            }
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    var jq = jQuery.noConflict();
+
+
+    jq(document).ready(function () {
+        jq("#resizable").resizable();
+    });
+
+    function copyContainerInfo() {
+        var container = document.getElementById("container");
+        var resizable = document.getElementById("resizable");
+        var containerInfo = {
+            top: container.offsetTop,
+            left: container.offsetLeft,
+            width: container.offsetWidth,
+            height: container.offsetHeight,
+            resizableLeft: resizable.offsetLeft,
+            resizableTop: resizable.offsetTop,
+            resizableWidth: resizable.offsetWidth,
+            resizableHeight: resizable.offsetHeight
+        };
+        var containerInfoString = JSON.stringify(containerInfo);
+        navigator.clipboard.writeText(containerInfoString);
+    }
+
+    function pasteContainerInfo() {
+        var pasteInput = document.getElementById("pasteInput");
+        var containerInfoString = pasteInput.value;
+        if (!containerInfoString) return;
+
+        var containerInfo = JSON.parse(containerInfoString);
+        var container = document.getElementById("container");
+        var resizable = document.getElementById("resizable");
+        container.style.top = containerInfo.top + "px";
+        container.style.left = containerInfo.left + "px";
+        container.style.width = containerInfo.width + "px";
+        container.style.height = containerInfo.height + "px";
+        resizable.style.left = containerInfo.resizableLeft + "px";
+        resizable.style.top = containerInfo.resizableTop + "px";
+        resizable.style.width = containerInfo.resizableWidth + "px";
+        resizable.style.height = containerInfo.resizableHeight + "px";
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*
+    <h2>Index</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.room_price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.room_status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.floor.floor_cctvQr)
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.room_price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.room_status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.floor.floor_cctvQr)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.room_id }) |
+                @Html.ActionLink("Details", "Details", new { id=item.room_id }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.room_id })
+            </td>
+        </tr>
+    }
+
+    </table>
+*@
