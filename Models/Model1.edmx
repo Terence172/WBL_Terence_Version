@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="db_roomrentalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="db_roomrentalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="cleanerAtt">
           <Key>
             <PropertyRef Name="cleanerAtt_id" />
@@ -98,15 +98,12 @@
           <Property Name="room_name" Type="varchar" MaxLength="50" />
           <Property Name="room_coordinate" Type="varchar" MaxLength="200" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'db_roomrental.dbo.sysConfig' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="sysConfig">
           <Key>
             <PropertyRef Name="category" />
-            <PropertyRef Name="value" />
           </Key>
           <Property Name="category" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="value" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="value" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -146,111 +143,6 @@ warning 6002: The table/view 'db_roomrental.dbo.sysConfig' does not have a prima
           <Property Name="user_name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="user_email" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="user_type" Type="varchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <EntityType Name="AggregatedCounter">
-          <Key>
-            <PropertyRef Name="Key" />
-          </Key>
-          <Property Name="Key" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Value" Type="bigint" Nullable="false" />
-          <Property Name="ExpireAt" Type="datetime" />
-        </EntityType>
-        <EntityType Name="Counter">
-          <Key>
-            <PropertyRef Name="Key" />
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Key" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Value" Type="int" Nullable="false" />
-          <Property Name="ExpireAt" Type="datetime" />
-          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Hash">
-          <Key>
-            <PropertyRef Name="Key" />
-            <PropertyRef Name="Field" />
-          </Key>
-          <Property Name="Key" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Field" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Value" Type="nvarchar(max)" />
-          <Property Name="ExpireAt" Type="datetime2" Precision="7" />
-        </EntityType>
-        <EntityType Name="Job">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="StateId" Type="bigint" />
-          <Property Name="StateName" Type="nvarchar" MaxLength="20" />
-          <Property Name="InvocationData" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Arguments" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
-          <Property Name="ExpireAt" Type="datetime" />
-        </EntityType>
-        <EntityType Name="JobParameter">
-          <Key>
-            <PropertyRef Name="JobId" />
-            <PropertyRef Name="Name" />
-          </Key>
-          <Property Name="JobId" Type="bigint" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="40" Nullable="false" />
-          <Property Name="Value" Type="nvarchar(max)" />
-        </EntityType>
-        <EntityType Name="JobQueue">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="Queue" />
-          </Key>
-          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="JobId" Type="bigint" Nullable="false" />
-          <Property Name="Queue" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="FetchedAt" Type="datetime" />
-        </EntityType>
-        <EntityType Name="List">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="Key" />
-          </Key>
-          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Key" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Value" Type="nvarchar(max)" />
-          <Property Name="ExpireAt" Type="datetime" />
-        </EntityType>
-        <EntityType Name="Schema">
-          <Key>
-            <PropertyRef Name="Version" />
-          </Key>
-          <Property Name="Version" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Server">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="Data" Type="nvarchar(max)" />
-          <Property Name="LastHeartbeat" Type="datetime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Set">
-          <Key>
-            <PropertyRef Name="Key" />
-            <PropertyRef Name="Value" />
-          </Key>
-          <Property Name="Key" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Score" Type="float" Nullable="false" />
-          <Property Name="Value" Type="nvarchar" MaxLength="256" Nullable="false" />
-          <Property Name="ExpireAt" Type="datetime" />
-        </EntityType>
-        <EntityType Name="State">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="JobId" />
-          </Key>
-          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="JobId" Type="bigint" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="Reason" Type="nvarchar" MaxLength="100" />
-          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
-          <Property Name="Data" Type="nvarchar(max)" />
         </EntityType>
         <Association Name="FK_cleanerAtt_floor">
           <End Role="floor" Type="Self.floor" Multiplicity="1" />
@@ -297,34 +189,6 @@ warning 6002: The table/view 'db_roomrental.dbo.sysConfig' does not have a prima
             </Principal>
             <Dependent Role="floor">
               <PropertyRef Name="landlord_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_HangFire_JobParameter_Job">
-          <End Role="Job" Type="Self.Job" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="JobParameter" Type="Self.JobParameter" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Job">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="JobParameter">
-              <PropertyRef Name="JobId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_HangFire_State_Job">
-          <End Role="Job" Type="Self.Job" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="State" Type="Self.State" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Job">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="State">
-              <PropertyRef Name="JobId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -422,26 +286,10 @@ warning 6002: The table/view 'db_roomrental.dbo.sysConfig' does not have a prima
           <EntitySet Name="profit" EntityType="Self.profit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="reminds" EntityType="Self.reminds" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="room" EntityType="Self.room" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysConfig" EntityType="Self.sysConfig" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tenant" EntityType="Self.tenant" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AggregatedCounter" EntityType="Self.AggregatedCounter" Schema="HangFire" store:Type="Tables" />
-          <EntitySet Name="Counter" EntityType="Self.Counter" Schema="HangFire" store:Type="Tables" />
-          <EntitySet Name="Hash" EntityType="Self.Hash" Schema="HangFire" store:Type="Tables" />
-          <EntitySet Name="Job" EntityType="Self.Job" Schema="HangFire" store:Type="Tables" />
-          <EntitySet Name="JobParameter" EntityType="Self.JobParameter" Schema="HangFire" store:Type="Tables" />
-          <EntitySet Name="JobQueue" EntityType="Self.JobQueue" Schema="HangFire" store:Type="Tables" />
-          <EntitySet Name="List" EntityType="Self.List" Schema="HangFire" store:Type="Tables" />
-          <EntitySet Name="Schema" EntityType="Self.Schema" Schema="HangFire" store:Type="Tables" />
-          <EntitySet Name="Server" EntityType="Self.Server" Schema="HangFire" store:Type="Tables" />
-          <EntitySet Name="Set" EntityType="Self.Set" Schema="HangFire" store:Type="Tables" />
-          <EntitySet Name="State" EntityType="Self.State" Schema="HangFire" store:Type="Tables" />
-          <EntitySet Name="sysConfig" EntityType="Self.sysConfig" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [sysConfig].[category] AS [category], 
-    [sysConfig].[value] AS [value]
-    FROM [dbo].[sysConfig] AS [sysConfig]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_cleanerAtt_floor" Association="Self.FK_cleanerAtt_floor">
             <End Role="floor" EntitySet="floor" />
             <End Role="cleanerAtt" EntitySet="cleanerAtt" />
@@ -457,14 +305,6 @@ warning 6002: The table/view 'db_roomrental.dbo.sysConfig' does not have a prima
           <AssociationSet Name="FK_floor_landlord" Association="Self.FK_floor_landlord">
             <End Role="landlord" EntitySet="landlord" />
             <End Role="floor" EntitySet="floor" />
-          </AssociationSet>
-          <AssociationSet Name="FK_HangFire_JobParameter_Job" Association="Self.FK_HangFire_JobParameter_Job">
-            <End Role="Job" EntitySet="Job" />
-            <End Role="JobParameter" EntitySet="JobParameter" />
-          </AssociationSet>
-          <AssociationSet Name="FK_HangFire_State_Job" Association="Self.FK_HangFire_State_Job">
-            <End Role="Job" EntitySet="Job" />
-            <End Role="State" EntitySet="State" />
           </AssociationSet>
           <AssociationSet Name="FK_inventory_floor" Association="Self.FK_inventory_floor">
             <End Role="floor" EntitySet="floor" />
@@ -495,8 +335,7 @@ warning 6002: The table/view 'db_roomrental.dbo.sysConfig' does not have a prima
             <End Role="tenant" EntitySet="tenant" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="db_roomrentalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -595,7 +434,7 @@ warning 6002: The table/view 'db_roomrental.dbo.sysConfig' does not have a prima
           <Property Name="reminder_desc" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="reminder_title" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
           <Property Name="reminder_date" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="landlord" Relationship="db_roomrentalModel.FK_remind_landlord" FromRole="reminds" ToRole="landlord" />
+          <NavigationProperty Name="landlord" Relationship="Self.FK_remind_landlord" FromRole="reminds" ToRole="landlord" />
           <NavigationProperty Name="tenant" Relationship="Self.FK_remind_tenant" FromRole="reminds" ToRole="tenant" />
         </EntityType>
         <EntityType Name="room">
@@ -654,122 +493,12 @@ warning 6002: The table/view 'db_roomrental.dbo.sysConfig' does not have a prima
           <NavigationProperty Name="finances" Relationship="Self.FK_finance_user" FromRole="user" ToRole="finance" />
           <NavigationProperty Name="Investors" Relationship="Self.FK_Investor_user" FromRole="user" ToRole="Investor" />
         </EntityType>
-        <EntityType Name="AggregatedCounter">
-          <Key>
-            <PropertyRef Name="Key" />
-          </Key>
-          <Property Name="Key" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Value" Type="Int64" Nullable="false" />
-          <Property Name="ExpireAt" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="Counter">
-          <Key>
-            <PropertyRef Name="Key" />
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Key" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Value" Type="Int32" Nullable="false" />
-          <Property Name="ExpireAt" Type="DateTime" Precision="3" />
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-        </EntityType>
-        <EntityType Name="Hash">
-          <Key>
-            <PropertyRef Name="Key" />
-            <PropertyRef Name="Field" />
-          </Key>
-          <Property Name="Key" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Field" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ExpireAt" Type="DateTime" Precision="7" />
-        </EntityType>
-        <EntityType Name="Job">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StateId" Type="Int64" />
-          <Property Name="StateName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="InvocationData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Arguments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ExpireAt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="JobParameters" Relationship="Self.FK_HangFire_JobParameter_Job" FromRole="Job" ToRole="JobParameter" />
-          <NavigationProperty Name="States" Relationship="Self.FK_HangFire_State_Job" FromRole="Job" ToRole="State" />
-        </EntityType>
-        <EntityType Name="JobParameter">
-          <Key>
-            <PropertyRef Name="JobId" />
-            <PropertyRef Name="Name" />
-          </Key>
-          <Property Name="JobId" Type="Int64" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Job" Relationship="Self.FK_HangFire_JobParameter_Job" FromRole="JobParameter" ToRole="Job" />
-        </EntityType>
-        <EntityType Name="JobQueue">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="Queue" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="JobId" Type="Int64" Nullable="false" />
-          <Property Name="Queue" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="FetchedAt" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="List">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="Key" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Key" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ExpireAt" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="Schema">
-          <Key>
-            <PropertyRef Name="Version" />
-          </Key>
-          <Property Name="Version" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Server">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Data" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="LastHeartbeat" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
-        <EntityType Name="Set">
-          <Key>
-            <PropertyRef Name="Key" />
-            <PropertyRef Name="Value" />
-          </Key>
-          <Property Name="Key" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Score" Type="Double" Nullable="false" />
-          <Property Name="Value" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ExpireAt" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="State">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="JobId" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="JobId" Type="Int64" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Reason" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Data" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Job" Relationship="Self.FK_HangFire_State_Job" FromRole="State" ToRole="Job" />
-        </EntityType>
         <EntityType Name="sysConfig">
           <Key>
             <PropertyRef Name="category" />
-            <PropertyRef Name="value" />
           </Key>
           <Property Name="category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="value" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="value" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_cleanerAtt_floor">
           <End Role="floor" Type="Self.floor" Multiplicity="1" />
@@ -903,34 +632,6 @@ warning 6002: The table/view 'db_roomrental.dbo.sysConfig' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_HangFire_JobParameter_Job">
-          <End Role="Job" Type="Self.Job" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="JobParameter" Type="Self.JobParameter" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Job">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="JobParameter">
-              <PropertyRef Name="JobId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_HangFire_State_Job">
-          <End Role="Job" Type="Self.Job" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="State" Type="Self.State" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Job">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="State">
-              <PropertyRef Name="JobId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="db_roomrentalEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="cleanerAtts" EntityType="Self.cleanerAtt" />
           <EntitySet Name="finances" EntityType="Self.finance" />
@@ -944,17 +645,6 @@ warning 6002: The table/view 'db_roomrental.dbo.sysConfig' does not have a prima
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="tenants" EntityType="Self.tenant" />
           <EntitySet Name="users" EntityType="Self.user" />
-          <EntitySet Name="AggregatedCounters" EntityType="Self.AggregatedCounter" />
-          <EntitySet Name="Counters" EntityType="Self.Counter" />
-          <EntitySet Name="Hashes" EntityType="Self.Hash" />
-          <EntitySet Name="Jobs" EntityType="Self.Job" />
-          <EntitySet Name="JobParameters" EntityType="Self.JobParameter" />
-          <EntitySet Name="JobQueues" EntityType="Self.JobQueue" />
-          <EntitySet Name="Lists" EntityType="Self.List" />
-          <EntitySet Name="Schemata" EntityType="Self.Schema" />
-          <EntitySet Name="Servers" EntityType="Self.Server" />
-          <EntitySet Name="Sets" EntityType="Self.Set" />
-          <EntitySet Name="States" EntityType="Self.State" />
           <EntitySet Name="sysConfigs" EntityType="Self.sysConfig" />
           <AssociationSet Name="FK_cleanerAtt_floor" Association="Self.FK_cleanerAtt_floor">
             <End Role="floor" EntitySet="floors" />
@@ -999,14 +689,6 @@ warning 6002: The table/view 'db_roomrental.dbo.sysConfig' does not have a prima
           <AssociationSet Name="FK_tenant_room" Association="Self.FK_tenant_room">
             <End Role="room" EntitySet="rooms" />
             <End Role="tenant" EntitySet="tenants" />
-          </AssociationSet>
-          <AssociationSet Name="FK_HangFire_JobParameter_Job" Association="Self.FK_HangFire_JobParameter_Job">
-            <End Role="Job" EntitySet="Jobs" />
-            <End Role="JobParameter" EntitySet="JobParameters" />
-          </AssociationSet>
-          <AssociationSet Name="FK_HangFire_State_Job" Association="Self.FK_HangFire_State_Job">
-            <End Role="Job" EntitySet="Jobs" />
-            <End Role="State" EntitySet="States" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -1156,115 +838,6 @@ warning 6002: The table/view 'db_roomrental.dbo.sysConfig' does not have a prima
                 <ScalarProperty Name="user_name" ColumnName="user_name" />
                 <ScalarProperty Name="user_email" ColumnName="user_email" />
                 <ScalarProperty Name="user_type" ColumnName="user_type" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AggregatedCounters">
-            <EntityTypeMapping TypeName="db_roomrentalModel.AggregatedCounter">
-              <MappingFragment StoreEntitySet="AggregatedCounter">
-                <ScalarProperty Name="Key" ColumnName="Key" />
-                <ScalarProperty Name="Value" ColumnName="Value" />
-                <ScalarProperty Name="ExpireAt" ColumnName="ExpireAt" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Counters">
-            <EntityTypeMapping TypeName="db_roomrentalModel.Counter">
-              <MappingFragment StoreEntitySet="Counter">
-                <ScalarProperty Name="Key" ColumnName="Key" />
-                <ScalarProperty Name="Value" ColumnName="Value" />
-                <ScalarProperty Name="ExpireAt" ColumnName="ExpireAt" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Hashes">
-            <EntityTypeMapping TypeName="db_roomrentalModel.Hash">
-              <MappingFragment StoreEntitySet="Hash">
-                <ScalarProperty Name="Key" ColumnName="Key" />
-                <ScalarProperty Name="Field" ColumnName="Field" />
-                <ScalarProperty Name="Value" ColumnName="Value" />
-                <ScalarProperty Name="ExpireAt" ColumnName="ExpireAt" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Jobs">
-            <EntityTypeMapping TypeName="db_roomrentalModel.Job">
-              <MappingFragment StoreEntitySet="Job">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="StateId" ColumnName="StateId" />
-                <ScalarProperty Name="StateName" ColumnName="StateName" />
-                <ScalarProperty Name="InvocationData" ColumnName="InvocationData" />
-                <ScalarProperty Name="Arguments" ColumnName="Arguments" />
-                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
-                <ScalarProperty Name="ExpireAt" ColumnName="ExpireAt" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="JobParameters">
-            <EntityTypeMapping TypeName="db_roomrentalModel.JobParameter">
-              <MappingFragment StoreEntitySet="JobParameter">
-                <ScalarProperty Name="JobId" ColumnName="JobId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Value" ColumnName="Value" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="JobQueues">
-            <EntityTypeMapping TypeName="db_roomrentalModel.JobQueue">
-              <MappingFragment StoreEntitySet="JobQueue">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="JobId" ColumnName="JobId" />
-                <ScalarProperty Name="Queue" ColumnName="Queue" />
-                <ScalarProperty Name="FetchedAt" ColumnName="FetchedAt" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Lists">
-            <EntityTypeMapping TypeName="db_roomrentalModel.List">
-              <MappingFragment StoreEntitySet="List">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Key" ColumnName="Key" />
-                <ScalarProperty Name="Value" ColumnName="Value" />
-                <ScalarProperty Name="ExpireAt" ColumnName="ExpireAt" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Schemata">
-            <EntityTypeMapping TypeName="db_roomrentalModel.Schema">
-              <MappingFragment StoreEntitySet="Schema">
-                <ScalarProperty Name="Version" ColumnName="Version" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Servers">
-            <EntityTypeMapping TypeName="db_roomrentalModel.Server">
-              <MappingFragment StoreEntitySet="Server">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Data" ColumnName="Data" />
-                <ScalarProperty Name="LastHeartbeat" ColumnName="LastHeartbeat" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Sets">
-            <EntityTypeMapping TypeName="db_roomrentalModel.Set">
-              <MappingFragment StoreEntitySet="Set">
-                <ScalarProperty Name="Key" ColumnName="Key" />
-                <ScalarProperty Name="Score" ColumnName="Score" />
-                <ScalarProperty Name="Value" ColumnName="Value" />
-                <ScalarProperty Name="ExpireAt" ColumnName="ExpireAt" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="States">
-            <EntityTypeMapping TypeName="db_roomrentalModel.State">
-              <MappingFragment StoreEntitySet="State">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="JobId" ColumnName="JobId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Reason" ColumnName="Reason" />
-                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
-                <ScalarProperty Name="Data" ColumnName="Data" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
